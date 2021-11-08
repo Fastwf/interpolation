@@ -1,5 +1,9 @@
 # Fastwf Interpolation
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Fastwf_interpolation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Fastwf_interpolation)
+[![Unit tests](https://github.com/Fastwf/interpolation/actions/workflows/test.yml/badge.svg)](https://github.com/Fastwf/interpolation/actions/workflows/test.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Fastwf_interpolation&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Fastwf_interpolation)
+
 ## Introduction
 
 String interpolation library.
