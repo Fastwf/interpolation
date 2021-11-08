@@ -1,0 +1,26 @@
+{
+    "name": "fastwf/interpolation",
+    "description": "String interpolation library",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Fastwf\\Interpolation\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fastwf\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David BELBEZE",
+            "email": "david.belbeze@gmail.com"
+        }
+    ],
+    "require": {}
+}

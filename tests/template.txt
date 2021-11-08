@@ -1,0 +1,19 @@
+%{value} at start.
+At the end %{value}
+The %{value} in the middle.
+\%{value} escaped at start.
+At the end escaped \%{value}
+The escaped \%{value} in the middle.
+Interpolate %{undefined}
+Problem pattern:
+- %{value
+- %{}
+- %
+- %{
+- %}
+- {
+- {}
+- }
+- \%
+- Inside %{%{value}}
+- \\%{value}
