@@ -2,6 +2,7 @@
     "name": "fastwf/interpolation",
     "description": "String interpolation library",
     "type": "library",
+    "version": "1.0.0",
     "require-dev": {
         "phpunit/phpunit": "^9"
     },
