@@ -2,13 +2,14 @@
 
 namespace Fastwf\Interpolation;
 
+use Fastwf\Interpolation\Utils\RegexUtil;
+use Fastwf\Interpolation\InterpolatorInterface;
+
 /**
  * String interpolator that use PCRE engine to inject values in the template.
  */
-class StringInterpolator
+class StringInterpolator implements InterpolatorInterface
 {
-
-    const SPECIALS = ['.', '^', '$', '*', '+', '-', '?', '(', ')', '[', ']', '{', '}', '\\', '|'];
 
     private $mark;
     private $start;
@@ -22,22 +23,11 @@ class StringInterpolator
     public function __construct($strict = false, $mark = "%", $start = "{", $end = "}")
     {
         $this->strict = $strict;
-        $this->mark = $this->escape($mark);
-        $this->start = $this->escape($start);
-        $this->end = $this->escape($end);
+        $this->mark = RegexUtil::escape($mark);
+        $this->start = RegexUtil::escape($start);
+        $this->end = RegexUtil::escape($end);
 
         $this->pattern = "/(^|\\\\?{$this->mark})({$this->start}([^{$this->mark}{$this->start}{$this->end}]+){$this->end})/m";
-    }
-
-    /**
-     * Escape the regular expression special chars to prevent error in auto generated pattern.
-     *
-     * @param string $char
-     * @return string
-     */
-    private function escape($char)
-    {
-        return \in_array($char, self::SPECIALS) ? "\\${char}" : $char;
     }
 
     public function interpolate($template, $parameters)

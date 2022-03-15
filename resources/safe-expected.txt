@@ -1,0 +1,9 @@
+VALUE at start.
+At the end VALUE
+The VALUE in the middle.
+\%{value} escaped at start.
+At the end escaped \%{ value }
+The escaped \%{value} in the middle.
+
+Now some pipes with a date for example 1995-04-26.
+Or multiple pipes with the list [1, 3, 2] and sorted [1, 2, 3].

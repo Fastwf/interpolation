@@ -11,13 +11,14 @@ class StringInterpolatorTest extends TestCase
 
     /**
      * @covers Fastwf\Interpolation\StringInterpolator
+     * @covers Fastwf\Interpolation\Utils\RegexUtil
      */
     public function testInterpolate()
     {
         $itpr = new StringInterpolator();
 
-        $template = \file_get_contents(__DIR__.'/template.txt');
-        $expected = \file_get_contents(__DIR__.'/expected.txt');
+        $template = \file_get_contents(__DIR__.'/../resources/template.txt');
+        $expected = \file_get_contents(__DIR__.'/../resources/expected.txt');
 
         $this->assertEquals(
             $expected,
@@ -28,6 +29,7 @@ class StringInterpolatorTest extends TestCase
     /**
      * @covers Fastwf\Interpolation\StringInterpolator
      * @covers Fastwf\Interpolation\InterpolationException
+     * @covers Fastwf\Interpolation\Utils\RegexUtil
      */
     public function testStrictInterpolate()
     {
@@ -35,7 +37,7 @@ class StringInterpolatorTest extends TestCase
 
         $itpr = new StringInterpolator(true);
 
-        $template = \file_get_contents(__DIR__.'/template.txt');
+        $template = \file_get_contents(__DIR__.'/../resources/template.txt');
 
         $itpr->interpolate($template, ['value' => 'VALUE']);
     }
