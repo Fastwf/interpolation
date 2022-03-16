@@ -78,21 +78,7 @@ class StringToken extends AToken
                 }
                 else
                 {
-                    // The sequence start with \x or \u or is ''
-                    switch (substr($chars, 0, 1))
-                    {
-                        case 'x':
-                            // Extract hexa part \x[0-9A-Fa-f]{1,2}
-                            $ord = hexdec(substr($chars, 1));
-                            break;
-                        case 'u':
-                            // Extract hexa part \u{[0-9A-Fa-f]+}
-                            $ord = hexdec(substr($chars, 2, strlen($chars) - 3));
-                            break;
-                        default:
-                            $ord = self::ORD_BACKSLASH;
-                            break;
-                    }
+                    $ord = self::parseHexaChar($chars);
                 }
 
                 $string .= mb_chr($ord);
@@ -107,6 +93,33 @@ class StringToken extends AToken
         }
 
         return $string;
+    }
+
+    /**
+     * Parse a char in hexa representation (\x... or \u...).
+     *
+     * @param string $chars the char hexa representation.
+     * @return string The char parsed.
+     */
+    private static function parseHexaChar($chars)
+    {
+        // The sequence start with \x or \u or is ''
+        switch (substr($chars, 0, 1))
+        {
+            case 'x':
+                // Extract hexa part \x[0-9A-Fa-f]{1,2}
+                $ord = hexdec(substr($chars, 1));
+                break;
+            case 'u':
+                // Extract hexa part \u{[0-9A-Fa-f]+}
+                $ord = hexdec(substr($chars, 2, strlen($chars) - 3));
+                break;
+            default:
+                $ord = self::ORD_BACKSLASH;
+                break;
+        }
+
+        return $ord;
     }
 
 }

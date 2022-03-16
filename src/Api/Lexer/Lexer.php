@@ -45,11 +45,22 @@ class Lexer {
      */
     protected $current;
 
+    /**
+     * Constructor.
+     *
+     * @param string|null $source The source content to analyse or null (set later using {@see Lexer::setSource})
+     */
     public function __construct($source = null)
     {
         $this->setSource($source);
     }
 
+    /**
+     * Reset the source content of the lexer.
+     *
+     * @param string $source The new source content to analyse
+     * @return void
+     */
     public function setSource($source)
     {
         $this->source = $source;
@@ -105,10 +116,10 @@ class Lexer {
      */
     public function skip($tokenId)
     {
-        $source = substr($this->source, $this->offset);
+        $subSource = substr($this->source, $this->offset);
 
         $matches = [];
-        if (preg_match("/^{$this->getToken($tokenId)->getPattern()}/", $source, $matches) === 1)
+        if (preg_match("/^{$this->getToken($tokenId)->getPattern()}/", $subSource, $matches) === 1)
         {
             // The pattern is found, update the offset to move after
             $this->current = $matches[0];
@@ -139,7 +150,7 @@ class Lexer {
             $index = isset($matches[1]) ? 1 : 0;
 
             // Use the offset to update the content of 'current' property
-            $offset = $this->offset;
+            $lastOffset = $this->offset;
             $newOffset = $matches[$index][1];
 
             // Update the new offset
@@ -151,18 +162,18 @@ class Lexer {
             }
 
             // Set the current data from the previous offset to the start of the token match
-            $this->current = substr($this->source, $offset, $newOffset - $offset);
+            $this->current = substr($this->source, $lastOffset, $newOffset - $lastOffset);
 
             return true;
         }
         else
         {
             // The expected pattern is not found -> move to the end
-            $offset = $this->offset;
+            $lastOffset = $this->offset;
             $this->offset = strlen($this->source);
 
             // Set the current data from the offset to the end of the source
-            $this->current = substr($this->source, $offset);
+            $this->current = substr($this->source, $lastOffset);
 
             return false;
         }
@@ -177,14 +188,14 @@ class Lexer {
      */
     public function expectToken(...$ids)
     {
-        $source = substr($this->source, $this->offset);
+        $subSource = substr($this->source, $this->offset);
 
         foreach ($ids as $id)
         {
             $token = $this->getToken($id);
             
             $matches = [];
-            if (preg_match("/^(?:{$token->getPattern()})/", $source, $matches) === 1)
+            if (preg_match("/^(?:{$token->getPattern()})/", $subSource, $matches) === 1)
             {
                 $this->current = $matches[0];
                 $this->offset += strlen($this->current);
@@ -205,14 +216,14 @@ class Lexer {
      */
     public function look(...$ids)
     {
-        $source = substr($this->source, $this->offset);
+        $subSource = substr($this->source, $this->offset);
 
         foreach ($ids as $id)
         {
             $token = $this->getToken($id);
             
             $matches = [];
-            if (preg_match("/^(?:{$token->getPattern()})/", $source, $matches) === 1)
+            if (preg_match("/^(?:{$token->getPattern()})/", $subSource, $matches) === 1)
             {
                 $this->current = $matches[0];
 

@@ -69,7 +69,7 @@ class Environment
      *
      * @param string $name the pipe name.
      * @param PipeInterface|null $pipe the pipe implementation or null to remove the pipe.
-     * @return void
+     * @return $this
      */
     public function setPipe($name, $pipe)
     {
@@ -84,6 +84,8 @@ class Environment
             unset($this->pipes[$name]);
         }
         // Else nothing to perform (the previous pipe was not set)
+
+        return $this;
     }
 
     /**
