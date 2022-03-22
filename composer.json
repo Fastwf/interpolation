@@ -24,5 +24,14 @@
             "name": "David BELBEZE",
             "email": "david.belbeze@gmail.com"
         }
+    ],
+    "keywords": [
+        "interpolation",
+        "interpolate",
+        "lexer",
+        "pipe",
+        "filter",
+        "format",
+        "template"
     ]
 }
