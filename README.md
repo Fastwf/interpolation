@@ -95,6 +95,45 @@ Hello Fast Web Framework with injection escaped \%{name}.
 because lex parse the template as node and node cannot be restored from its
 original form.
 
+### Add transform functions
+
+The `LexInterpolator` allows to transform values thanks to the pipe syntax.
+
+A pipe is required when the value cannot be transformed as string or when the value must be updated before injection.  
+The next example show how to format a date and transform it before injection in the template.
+
+```php
+// test.php
+// ...
+
+$interpolator = new LexInterpolator();
+
+$interpolator->getEnvironment()
+    ->setPipe('date', new PipeFunction(
+        function ($date, $format) {
+            return $date->format($format);
+        })
+    )
+    ->setPipe('lower', new PipeFunction(
+        function ($str) {
+            return mb_strtolower($str);
+        }
+    ))
+    ;
+
+echo $interpolator->interpolate(
+    "Today is %{ today | date('l jS F Y') | lower }.",
+    ['today' => new DateTime('2022-03-16')]
+) . PHP_EOL;
+```
+
+This script execution produce the next output.
+
+```bash
+$ php test.php
+Today is wednesday 16th march 2022.
+```
+
 ### Customise
 
 Like `StringInterpolator`, interpolation markers can be customized for `LexInterpolator`.
